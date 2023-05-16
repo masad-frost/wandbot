@@ -4,14 +4,20 @@ from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
 from wandbot.chat import Chat
+from wandbot.config import default_config
+import wandb
 
-app = App(token=os.environ.get("SLACK_APP_TOKEN"))
+app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 
-chat = Chat()
+
+run=wandb.init()
+run.config.update(default_config.__dict__)
+chat = Chat(wandb_run=run)
 
 
 @app.event("app_mention")
 def command_handler(body, say, logger):
+    print("mention", body, say)
     try:
         text = body["event"].get("text")
         user = body["event"].get("user")

@@ -559,6 +559,11 @@ def main():
         hyde_prompt_artifact.add_file(args.hyde_prompt)
         run.log_artifact(hyde_prompt_artifact)
 
+    # create chat prompt
+    chat_prompt_artifact = wandb.Artifact("system_prompt", type="prompt")
+    chat_prompt_artifact.add_file("chat_prompt.txt")
+    run.log_artifact(chat_prompt_artifact)
+
     run.finish()
 
 
